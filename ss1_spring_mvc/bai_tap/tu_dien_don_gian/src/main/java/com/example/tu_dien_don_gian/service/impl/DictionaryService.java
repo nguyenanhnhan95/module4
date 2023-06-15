@@ -10,12 +10,13 @@ import java.util.Map;
 @Service
 public class DictionaryService implements IDictionaryService {
     @Autowired
-    DictionaryRepository dictionaryRepository;
+    private DictionaryRepository dictionaryRepository;
+
     @Override
     public String getResult(String english) {
-        Map<String,String> stringMap= dictionaryRepository.getAll();
-        for (String key:stringMap.keySet()) {
-            if(key.equals(english)){
+        Map<String, String> stringMap = dictionaryRepository.getAll();
+        for (String key : stringMap.keySet()) {
+            if (key.equals(english)) {
                 return stringMap.get(key);
             }
         }

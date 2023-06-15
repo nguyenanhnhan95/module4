@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class DictionaryController {
     @Autowired
-    DictionaryService dictionaryService;
+    private DictionaryService dictionaryService;
 
     @GetMapping("")
     public String showFormDictionary() {
