@@ -23,4 +23,24 @@ public class StudentService implements IStudentService {
     public void addStudent(Student student) {
         students.add(student);
     }
+
+    @Override
+    public Student findStudent(int id) {
+        for (Student s:students) {
+            if(s.getId()==id){
+                return s;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public void delete(int id) {
+        for (int i = 0; i < students.size(); i++) {
+            if(students.get(i).getId()==id){
+                students.remove(i);
+                break;
+            }
+        }
+    }
 }

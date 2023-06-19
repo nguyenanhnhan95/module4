@@ -19,7 +19,7 @@
           integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 </head>
 <body>
-<a href="/create">Thêm Mới Học Viên</a>
+<a href="/student/create">Thêm Mới Học Viên</a>
 <table class="table">
     <thead>
     <tr>
@@ -41,24 +41,50 @@
                 <c:out value="${student.birth}"></c:out>
             </td>
             <td>
-            <c:choose>
-                <c:when test="${student.gender==true}">
-                    Nam
-                </c:when>
-                <c:otherwise>
-                    Nữ
-                </c:otherwise>
-            </c:choose>
+                <c:choose>
+                    <c:when test="${student.gender==true}">
+                        Nam
+                    </c:when>
+                    <c:otherwise>
+                        Nữ
+                    </c:otherwise>
+                </c:choose>
             </td>
             <td><c:out value="${student.nameClass}"></c:out></td>
             <td><c:out value="${student.department}"></c:out></td>
             <td>
-            <button type="submit">Delete</button>
+                <button type="button" onclick="isDelete('${student.id}','${student.name}')" class="btn btn-primary" data-bs-toggle="modal"
+                        data-bs-target="#exampleModal">Delete</button>
             </td>
         </tr>
     </c:forEach>
     </tbody>
 </table>
+<div class="modal" id="exampleModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Xóa Học Viên</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h4>Bạn có muốn xóa học viên tên<span id="nameDelete"></span></h4>
+            </div>
+            <div class="modal-footer">
+                <form action="/student/delete" method="post">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" name="id" id="isDelete" class="btn btn-primary">Delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function isDelete(a,b){
+        document.getElementById("nameDelete").value=b;
+        document.getElementById("isDelete").value=a;
+    }
+</script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>

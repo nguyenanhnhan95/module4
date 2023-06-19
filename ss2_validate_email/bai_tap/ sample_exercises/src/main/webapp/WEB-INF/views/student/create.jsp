@@ -11,7 +11,7 @@
     <title>Title</title>
 </head>
 <body>
-<form action="/create" method="post">
+<form action="/student/create" method="post">
     <div class="mb-3">
         <label for="name" class="form-label">Name</label>
         <input type="text" name="name" class="form-control" id="name">

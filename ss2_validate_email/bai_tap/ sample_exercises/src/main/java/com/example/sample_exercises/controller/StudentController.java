@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
+@RequestMapping("/student")
 public class StudentController {
     @Autowired
     private StudentService studentService;
@@ -25,7 +26,12 @@ public class StudentController {
     @RequestMapping(value = "/create",method = RequestMethod.POST)
     public String save(String name,boolean gender,String birth,String nameClass,String department){
         studentService.addStudent(new Student(studentService.getList().size()+1,name,gender,birth,nameClass,department));
-        return "redirect:/";
+        return "redirect:/student";
+    }
+    @RequestMapping(value = "/delete",method = RequestMethod.POST)
+    public String delete(int id){
+        studentService.delete(id);
+        return "redirect:/student";
     }
 
 }
