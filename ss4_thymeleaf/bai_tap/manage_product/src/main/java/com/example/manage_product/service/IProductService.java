@@ -10,7 +10,7 @@ public interface IProductService {
 
     void deleteProduct(int id);
 
-    void saveProduct(Product product);
+    boolean saveProduct(Product product);
 
     void editProduct(Product product);
 

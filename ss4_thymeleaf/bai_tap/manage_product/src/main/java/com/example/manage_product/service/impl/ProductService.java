@@ -14,7 +14,6 @@ public class ProductService implements IProductService {
     @Autowired
     private IProductRepository productRepository;
     private List<Product> products;
-
     @Override
     public List<Product> getProducts() {
         return productRepository.getProducts();
@@ -33,10 +32,14 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public void saveProduct(Product product) {
+    public boolean saveProduct(Product product) {
         products = productRepository.getProducts();
-        int idNew = products.size() + 1;
+        int idNew = products.get(products.size()-1).getId() + 1;
+        if(product.getName().equals("")||product.getDetail().equals("")||product.getPrice()==0.0||product.getManufacture().equals("")){
+            return false;
+        }
         products.add(new Product(idNew, product.getName(), product.getPrice(), product.getDetail(), product.getManufacture()));
+        return true;
     }
 
     @Override

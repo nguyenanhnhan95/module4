@@ -36,10 +36,16 @@ public class ProductController {
     }
 
     @PostMapping("/create-form")
-    public String save(@ModelAttribute Product product, RedirectAttributes redirectAttributes) {
-        productService.saveProduct(product);
-        redirectAttributes.addFlashAttribute("message", "Bạn đã thêm thành công");
-        return "redirect:/products";
+    public String save(@ModelAttribute Product product, RedirectAttributes redirectAttributes, Model model) {
+        boolean flag = productService.saveProduct(product);
+        if (flag) {
+            redirectAttributes.addFlashAttribute("message", "Bạn đã thêm thành công");
+            return "redirect:/products";
+        } else {
+            model.addAttribute("message", "Vui lòng không để trống :");
+            model.addAttribute("product", product);
+            return "/create";
+        }
     }
 
     @GetMapping("{id}/edit-form")
