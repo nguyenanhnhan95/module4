@@ -24,6 +24,10 @@ public class ProductController {
 
     @PostMapping("/delete")
     public String deleteProduct(@RequestParam("id") int id, RedirectAttributes redirectAttributes) {
+        if (productService.findProduct(id) == null) {
+            redirectAttributes.addFlashAttribute("message", "Bạn nhập id sai");
+            return "redirect:/products";
+        }
         productService.deleteProduct(id);
         redirectAttributes.addFlashAttribute("message", "Bạn đã xóa thành công");
         return "redirect:/products";
@@ -35,7 +39,7 @@ public class ProductController {
         return "/create";
     }
 
-    @PostMapping("/create-form")
+    @PostMapping("/create")
     public String save(@ModelAttribute Product product, RedirectAttributes redirectAttributes, Model model) {
         boolean flag = productService.saveProduct(product);
         if (flag) {
@@ -48,16 +52,24 @@ public class ProductController {
         }
     }
 
-    @GetMapping("{id}/edit-form")
-    public String editFormProduct(@PathVariable int id, Model model) {
+    @GetMapping("/edit/{id}")
+    public String editFormProduct(@PathVariable int id, Model model, RedirectAttributes redirectAttributes) {
+        if (productService.findProduct(id) == null) {
+            redirectAttributes.addFlashAttribute("message", "Bạn nhập id sai");
+            return "redirect:/products";
+        }
         model.addAttribute("product", productService.findProduct(id));
         return "/edit";
     }
 
     @PostMapping("/edit")
     public String edit(@ModelAttribute Product product, RedirectAttributes redirectAttributes) {
-        productService.editProduct(product);
-        redirectAttributes.addFlashAttribute("message", "Bạn đã thay đổi thông tin thành công ");
+        if (productService.findProduct(product.getId()) == null) {
+            redirectAttributes.addFlashAttribute("message", "Bạn nhập id sai");
+        } else {
+            productService.editProduct(product);
+            redirectAttributes.addFlashAttribute("message", "Bạn đã thay đổi thông tin thành công ");
+        }
         return "redirect:/products";
     }
 

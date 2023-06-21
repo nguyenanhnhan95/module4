@@ -41,7 +41,7 @@
         <td th:text="${product.getManufacture()}"></td>
         <td>
             <div>
-                <a th:href="@{/products/{id}/edit-form(id=${product.id})}">
+                <a th:href="@{/products/edit/{id}(id=${product.id})}">
                     <button type="submit">Edit</button>
                 </a>
             </div>
