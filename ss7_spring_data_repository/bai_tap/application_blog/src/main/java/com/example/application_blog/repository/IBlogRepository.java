@@ -16,4 +16,6 @@ public interface IBlogRepository extends JpaRepository<Blog, Integer> {
     Blog getBlogByIdAndFlagDeleteFalse(int id);
     @Query(value = "SELECT *From blogs as b WHERE b.id_category=:name AND flag_delete=0 ", nativeQuery = true)
     Page<Blog> findAllByCategorise(@Param(value = "name")int id,Pageable pageable);
+    @Query(value = "SELECT *From blogs as b WHERE b.content LIKE concat('%',:content,'%') AND flag_delete=0", nativeQuery = true)
+    Page<Blog> searchAllBlog(@Param(value = "content") String content,Pageable pageable);
 }

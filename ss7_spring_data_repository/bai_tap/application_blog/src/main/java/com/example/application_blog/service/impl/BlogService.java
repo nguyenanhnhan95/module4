@@ -51,8 +51,8 @@ public class BlogService implements IBlogService {
     }
 
     @Override
-    public List<Blog> searchByName(String name) {
-        return null;
+    public Page<Blog> searchByContent(String content,Pageable pageable) {
+        return blogRepository.searchAllBlog(content,pageable);
     }
 
     @Override

@@ -1,7 +1,6 @@
 package com.example.application_blog.controller;
 
 import com.example.application_blog.model.Blog;
-import com.example.application_blog.model.Category;
 import com.example.application_blog.service.IBlogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -84,8 +83,8 @@ public class BlogController {
     }
 
     @PostMapping("/search")
-    public String search(@RequestParam("title") String title, Model model) {
-        model.addAttribute("blogs", blogService.searchByName(title));
+    public String search(@RequestParam("content") String content,Pageable pageable, Model model) {
+        model.addAttribute("blogs", blogService.searchByContent(content,pageable));
         return "index";
     }
 

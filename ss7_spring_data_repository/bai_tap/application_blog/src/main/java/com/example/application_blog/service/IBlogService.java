@@ -18,7 +18,7 @@ public interface IBlogService {
 
     Blog viewBlog(int id);
 
-    List<Blog> searchByName(String name);
+    Page<Blog> searchByContent(String content,Pageable pageable);
     List<Category> getCategories();
     Page<Blog> getNameCategory(int id,Pageable pageable);
 }
