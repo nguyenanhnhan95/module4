@@ -47,7 +47,6 @@ public class BlogController {
     @PostMapping("/edit")
     public String edit(@ModelAttribute Blog blog, RedirectAttributes redirectAttributes, Model model) {
         if (blogService.viewBlog(blog.getId()) != null) {
-            blog.setDays(LocalDate.now());
             blogService.updateBlog(blog);
             redirectAttributes.addFlashAttribute("message", "Bạn đã thay đổi thành công :");
             return "redirect:/blogs";
