@@ -12,6 +12,7 @@ public class Blog {
     private String title;
     private LocalDate days;
     private String people;
+    @Column(columnDefinition = "longtext")
     private String content;
 
     public Blog(int id, String title, LocalDate days, String people, String content) {
