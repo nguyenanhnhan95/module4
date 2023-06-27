@@ -17,7 +17,6 @@
         <div class="card" style="width: 18rem;" th:object="${blog}">
             <div class="card-body">
                 <h5 class="card-title" th:text="${blog.getPeople()}"></h5>
-                <h5 class="card-title" th:text="${blog.getTitle()}"></h5>
                 <p class="card-text" th:text="${blog.getContent()}"></p>
                 <p th:text="${blog.getDays()}"></p>
                 <a th:href="@{/blogs}" class="btn btn-primary">Go Back</a>

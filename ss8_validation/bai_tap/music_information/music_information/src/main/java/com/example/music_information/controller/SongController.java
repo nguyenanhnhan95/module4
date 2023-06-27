@@ -57,7 +57,7 @@ public class SongController {
     @GetMapping("/edit/{id}")
     public String editForm(@PathVariable("id") int id, Model model, RedirectAttributes redirectAttributes) {
         if (songService.viewSong(id) != null) {
-            model.addAttribute("songDto", songService.viewSong(id));
+                model.addAttribute("songDto", songService.viewSong(id));
             return "edit";
         } else {
             redirectAttributes.addFlashAttribute("msg", "Thao tác lỗi. Vui lòng thực hiện lại: ");
@@ -68,15 +68,15 @@ public class SongController {
     @PostMapping("/edit")
     public String edit(@Valid @ModelAttribute SongDto songDto, Model model, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         if (songService.viewSong(songDto.getId()) != null) {
-            new SongDto().validate(songDto, bindingResult);
-            if (bindingResult.hasErrors()) {
-                model.addAttribute("songDto", songDto);
+                    new SongDto().validate(songDto, bindingResult);
+                    if (bindingResult.hasErrors()) {
+                        model.addAttribute("songDto", songDto);
                 return "edit";
             }
             Song song = new Song();
             BeanUtils.copyProperties(songDto, song);
             songService.updateSong(song);
-            redirectAttributes.addFlashAttribute("msg", "Bạn đã thây đổi thành công  : ");
+            redirectAttributes.addFlashAttribute("msg", "Bạn đã thay đổi thành công  : ");
         } else {
             redirectAttributes.addFlashAttribute("msg", "Thao tác lỗi. Vui lòng thực hiện lại: ");
         }

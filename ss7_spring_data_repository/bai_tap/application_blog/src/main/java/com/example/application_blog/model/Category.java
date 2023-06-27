@@ -10,6 +10,7 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id_category;
     private String name_category;
+
     @OneToMany(mappedBy = "category")
     private List<Blog> blogs;
 

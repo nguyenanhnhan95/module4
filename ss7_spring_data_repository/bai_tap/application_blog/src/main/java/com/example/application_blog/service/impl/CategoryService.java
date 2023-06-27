@@ -5,6 +5,7 @@ import com.example.application_blog.model.Category;
 import com.example.application_blog.repository.IBlogRepository;
 import com.example.application_blog.repository.ICategoryRepository;
 import com.example.application_blog.service.ICategoryService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 @Service
 public class CategoryService implements ICategoryService {
+    @Autowired
     private ICategoryRepository categoryRepository;
     @Override
     public List<Category> getCategory() {
@@ -29,13 +31,17 @@ public class CategoryService implements ICategoryService {
     }
 
     @Override
-    public void saveCategory(Category category) {
-       categoryRepository.save(category);
+    public boolean saveCategory(Category category) {
+        if(category.getName_category().equals("")){
+            return false;
+        }
+        categoryRepository.save(category);
+        return true;
     }
 
     @Override
     public Category viewCategory(int id) {
-        return null;
+        return categoryRepository.getCategory(id);
     }
 
     @Override

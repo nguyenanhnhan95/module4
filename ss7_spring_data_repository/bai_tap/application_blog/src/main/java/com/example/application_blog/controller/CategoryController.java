@@ -20,13 +20,12 @@ public class CategoryController {
 
     @GetMapping("")
     public String showBlogs( Model model) {
-        model.addAttribute("blogs", categoryService.getCategories());
-        model.addAttribute("category",categoryService.getCategories());
+        model.addAttribute("categorys",categoryService.getCategory());
         return "/category/view";
     }
 
-    @PostMapping("/delete")
-    public String deleteBlog(@RequestParam("id") int id, RedirectAttributes redirectAttributes) {
+    @GetMapping ("/delete/{id}")
+    public String deleteBlog(@PathVariable("id") int id, RedirectAttributes redirectAttributes) {
         if (categoryService.viewCategory(id) != null) {
             redirectAttributes.addFlashAttribute("message", "Bạn đã xóa thành công :");
             categoryService.deleteCategory(id);
@@ -37,10 +36,9 @@ public class CategoryController {
     }
 
     @GetMapping("/edit/{id}")
-    public String editBlog(@PathVariable int id, Model model, RedirectAttributes redirectAttributes) {
+    public String editBlog(@PathVariable("id") int id, Model model, RedirectAttributes redirectAttributes) {
         if (categoryService.viewCategory(id) != null) {
-            model.addAttribute("blog", categoryService.viewCategory(id));
-            model.addAttribute("category",categoryService.getCategories());
+            model.addAttribute("category",categoryService.viewCategory(id));
             return "/category/edit";
         } else {
             redirectAttributes.addFlashAttribute("message", "Bạn thực hiện bị lỗi : Vui lòng thực hiện lại");
@@ -55,7 +53,7 @@ public class CategoryController {
             redirectAttributes.addFlashAttribute("message", "Bạn đã thay đổi thành công :");
             return "redirect:/category";
         } else {
-            model.addAttribute("blog", category);
+            model.addAttribute("category", category);
             model.addAttribute("message", "Bạn đã thay đổi không thành công :");
             return "/category/edit";
         }
@@ -63,8 +61,7 @@ public class CategoryController {
 
     @GetMapping("/create")
     public String create(Model model) {
-        model.addAttribute("blog", new Category());
-        model.addAttribute("category",categoryService.getCategories());
+        model.addAttribute("category", new Category());
         return "/category/create";
     }
 

@@ -14,7 +14,7 @@ public interface ICategoryService {
 
     void updateCategory(Category category);
 
-    void saveCategory(Category category);
+    boolean saveCategory(Category category);
 
     Category viewCategory(int id);
 

@@ -23,7 +23,7 @@ public class BlogController {
     public String showBlogs(@PageableDefault(size = 2,sort = "days",direction = Sort.Direction.DESC) Pageable pageable, Model model) {
         model.addAttribute("blogs", blogService.getBlogs(pageable));
         model.addAttribute("category",blogService.getCategories());
-        return "/blog/view";
+        return "blog/index";
     }
 
     @PostMapping("/delete")
@@ -38,11 +38,11 @@ public class BlogController {
     }
 
     @GetMapping("/edit/{id}")
-    public String editBlog(@PathVariable int id, Model model, RedirectAttributes redirectAttributes) {
+    public String editBlog(@PathVariable("id") int id, Model model, RedirectAttributes redirectAttributes) {
         if (blogService.viewBlog(id) != null) {
             model.addAttribute("blog", blogService.viewBlog(id));
             model.addAttribute("category",blogService.getCategories());
-            return "/blog/edit";
+            return "blog/edit";
         } else {
             redirectAttributes.addFlashAttribute("message", "Bạn thực hiện bị lỗi : Vui lòng thực hiện lại");
             return "redirect:/blogs";
@@ -58,7 +58,7 @@ public class BlogController {
         } else {
             model.addAttribute("blog", blog);
             model.addAttribute("message", "Bạn đã thay đổi không thành công :");
-            return "/blog/edit";
+            return "blog/edit";
         }
     }
 
@@ -66,7 +66,7 @@ public class BlogController {
     public String create(Model model) {
         model.addAttribute("blog", new Blog());
         model.addAttribute("category",blogService.getCategories());
-        return "/blog/create";
+        return "blog/create";
     }
 
     @PostMapping("/create")
@@ -78,21 +78,21 @@ public class BlogController {
         } else {
             redirectAttributes.addFlashAttribute("message", "Thêm mới không thành công :");
             model.addAttribute("blog", blog);
-            return "/blog/create";
+            return "blog/create";
         }
     }
 
     @PostMapping("/search")
     public String search(@RequestParam("content") String content,Pageable pageable, Model model) {
         model.addAttribute("blogs", blogService.searchByContent(content,pageable));
-        return "/blog/index";
+        return "blog/index";
     }
 
     @GetMapping("/view/{id}")
     public String view(@PathVariable int id, Model model, RedirectAttributes redirectAttributes) {
         if (blogService.viewBlog(id) != null) {
             model.addAttribute("blog", blogService.viewBlog(id));
-            return "/blog/view";
+            return "blog/view";
         } else {
             redirectAttributes.addFlashAttribute("message", "Bạn thực hiện bị lỗi :");
             return "redirect:/blogs";
@@ -102,6 +102,6 @@ public class BlogController {
     public String selectBlog(@RequestParam("id")int id,Pageable pageable,Model model){
         model.addAttribute("blogs",blogService.getNameCategory(id,pageable));
         model.addAttribute("category",blogService.getCategories());
-        return "/blog/index";
+        return "blog/index";
     }
 }
