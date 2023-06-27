@@ -10,8 +10,10 @@
         integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 </head>
 <body>
+<div th:if="${msg!=null}" th:text="${msg}"></div>
 <form th:action="@{/song/edit}" method="post" th:object="${songDto}">
   <div class="mb-3">
+    <input type="hidden" th:field="*{id}">
     <label for="nameMusic" class="form-label">Name Music</label>
     <input type="text" class="form-control" id="nameMusic" th:placeholder="${songDto.getNameMusic()}" th:field="*{nameMusic}">
     <span style="color: red" th:if="${#fields.hasErrors('nameMusic')}" th:errors="*{nameMusic}"></span>

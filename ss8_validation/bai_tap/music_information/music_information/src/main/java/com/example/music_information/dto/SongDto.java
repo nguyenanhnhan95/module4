@@ -6,6 +6,7 @@ import org.springframework.validation.Validator;
 import javax.persistence.Column;
 import javax.validation.constraints.*;
 public class SongDto implements Validator {
+    private int id;
     @NotBlank(message = "Vui lòng không để trống :")
     @Size(max = 800)
     @Pattern(regexp = "^([\\p{Lu}][\\p{Ll}]{1,8})(\\s([\\p{Lu}]|[\\p{Lu}][\\p{Ll}]{1,10})){0,5}$",message = "Không nhập ký tự đặc biệt :")
@@ -18,7 +19,7 @@ public class SongDto implements Validator {
     private String singer;
     @NotBlank(message = "Vui lòng không để trống ")
     @Size(max = 300,message = "Nhập dưới 300 ký tự")
-    @Pattern(regexp = "^([\\p{Lu}][\\p{Ll}]{1,8})(\\s([\\p{Lu}]|[\\p{Lu}][\\p{Ll}]{1,10})){0,5}$",message = "Không nhập ký tự đặc biệt , :")
+    @Pattern(regexp = "^[\\w ,]+$",message = "Không nhập ký tự đặc biệt , :")
     private String typeSing;
 
     public String getNameMusic() {
@@ -53,5 +54,13 @@ public class SongDto implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
 
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

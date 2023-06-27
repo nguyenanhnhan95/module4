@@ -11,6 +11,7 @@
 </head>
 <body>
 <a th:href="@{/song/create}">Thêm mới bài hát</a>
+<div th:if="${msg!=null}" th:text="${msg}"></div>
 <table class="table">
   <thead>
   <tr>
@@ -31,7 +32,7 @@
     <td th:text="${song.getSinger()}"></td>
     <td th:text="${song.getTypeSing()}"></td>
       <td >
-          <a th:href="@{/song/edit}">
+          <a th:href="@{/song/edit/{id}(id=${song.getId()})}">
               <button type="submit">Edit</button>
           </a>
       </td>

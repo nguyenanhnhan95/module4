@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 public class SongService implements ISongService {
     @Autowired
     private ISongRepository songRepository;
+
     @Override
     public Page<Song> getListSong(Pageable pageable) {
         return songRepository.findAllByFlagDeleteIsFalse(pageable);
@@ -26,12 +27,12 @@ public class SongService implements ISongService {
 
     @Override
     public void updateSong(Song song) {
-
+        songRepository.save(song);
     }
 
     @Override
     public void saveSong(Song song) {
-       songRepository.save(song);
+        songRepository.save(song);
     }
 
     @Override

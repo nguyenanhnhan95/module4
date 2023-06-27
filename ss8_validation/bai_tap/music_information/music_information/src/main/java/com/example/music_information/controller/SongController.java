@@ -21,48 +21,65 @@ import javax.websocket.server.PathParam;
 public class SongController {
     @Autowired
     private ISongService songService;
+
     @GetMapping("")
-    public String homeSong(@PageableDefault(size = 2)Pageable pageable, Model model){
-        model.addAttribute("songs",songService.getListSong(pageable));
+    public String homeSong(@PageableDefault(size = 2) Pageable pageable, Model model) {
+        model.addAttribute("songs", songService.getListSong(pageable));
         return "home";
     }
+
     @GetMapping("/create")
-    public String createForm(Model model){
-        model.addAttribute("songDto",new SongDto());
+    public String createForm(Model model) {
+        model.addAttribute("songDto", new SongDto());
         return "create";
     }
+
     @PostMapping("/create")
-    public String create(@Valid @ModelAttribute SongDto songDto, BindingResult bindingResult,Model model, RedirectAttributes redirectAttributes){
-        new SongDto().validate(songDto,bindingResult);
-        if(bindingResult.hasErrors()){
-            model.addAttribute("songDto",songDto);
+    public String create(@Valid @ModelAttribute SongDto songDto, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
+        new SongDto().validate(songDto, bindingResult);
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("songDto", songDto);
             return "create";
         }
         Song song = new Song();
-        BeanUtils.copyProperties(songDto,song);
+        BeanUtils.copyProperties(songDto, song);
         songService.saveSong(song);
-        redirectAttributes.addFlashAttribute("msg","Đã thêm mới thành công: ");
+        redirectAttributes.addFlashAttribute("msg", "Đã thêm mới thành công: ");
         return "redirect:/song";
     }
+
     @PostMapping("/delete")
-    public String delete(@PathParam("id") int id, RedirectAttributes redirectAttributes){
+    public String delete(@PathParam("id") int id, RedirectAttributes redirectAttributes) {
         songService.deleteSong(id);
         return "redirect:/song";
     }
-    @GetMapping("/edit")
-    public String editForm(Model model){
-        model.addAttribute("songDto",new SongDto());
-        return "edit";
-    }
-    @PostMapping("/edit")
-    public String edit(@Valid @ModelAttribute SongDto songDto,Model model,BindingResult bindingResult){
-        if(bindingResult.hasErrors()){
-            model.addAttribute("songDto",songDto);
+
+    @GetMapping("/edit/{id}")
+    public String editForm(@PathVariable("id") int id, Model model, RedirectAttributes redirectAttributes) {
+        if (songService.viewSong(id) != null) {
+            model.addAttribute("songDto", songService.viewSong(id));
             return "edit";
+        } else {
+            redirectAttributes.addFlashAttribute("msg", "Thao tác lỗi. Vui lòng thực hiện lại: ");
+            return "redirect:/song";
         }
-        Song song = new Song();
-        BeanUtils.copyProperties(songDto,song);
-        songService.updateSong(song);
+    }
+
+    @PostMapping("/edit")
+    public String edit(@Valid @ModelAttribute SongDto songDto, Model model, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+        if (songService.viewSong(songDto.getId()) != null) {
+            new SongDto().validate(songDto, bindingResult);
+            if (bindingResult.hasErrors()) {
+                model.addAttribute("songDto", songDto);
+                return "edit";
+            }
+            Song song = new Song();
+            BeanUtils.copyProperties(songDto, song);
+            songService.updateSong(song);
+            redirectAttributes.addFlashAttribute("msg", "Bạn đã thây đổi thành công  : ");
+        } else {
+            redirectAttributes.addFlashAttribute("msg", "Thao tác lỗi. Vui lòng thực hiện lại: ");
+        }
         return "redirect:/song";
     }
 }
