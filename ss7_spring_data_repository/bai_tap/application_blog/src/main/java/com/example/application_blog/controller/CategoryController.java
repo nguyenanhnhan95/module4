@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import org.springframework.data.domain.Pageable;
+
 import java.time.LocalDate;
 
 @Controller
@@ -19,12 +20,12 @@ public class CategoryController {
     private ICategoryService categoryService;
 
     @GetMapping("")
-    public String showBlogs( Model model) {
-        model.addAttribute("categorys",categoryService.getCategory());
+    public String showBlogs(Model model) {
+        model.addAttribute("categorys", categoryService.getCategory());
         return "/category/view";
     }
 
-    @GetMapping ("/delete/{id}")
+    @GetMapping("/delete/{id}")
     public String deleteBlog(@PathVariable("id") int id, RedirectAttributes redirectAttributes) {
         if (categoryService.viewCategory(id) != null) {
             redirectAttributes.addFlashAttribute("message", "Bạn đã xóa thành công :");
@@ -38,7 +39,7 @@ public class CategoryController {
     @GetMapping("/edit/{id}")
     public String editBlog(@PathVariable("id") int id, Model model, RedirectAttributes redirectAttributes) {
         if (categoryService.viewCategory(id) != null) {
-            model.addAttribute("category",categoryService.viewCategory(id));
+            model.addAttribute("category", categoryService.viewCategory(id));
             return "/category/edit";
         } else {
             redirectAttributes.addFlashAttribute("message", "Bạn thực hiện bị lỗi : Vui lòng thực hiện lại");

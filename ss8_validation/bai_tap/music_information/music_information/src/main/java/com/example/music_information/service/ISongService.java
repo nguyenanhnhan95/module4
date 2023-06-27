@@ -6,10 +6,14 @@ import org.springframework.data.domain.Pageable;
 
 public interface ISongService {
     Page<Song> getListSong(Pageable pageable);
+
     void deleteSong(int id);
+
     void updateSong(Song song);
+
     void saveSong(Song song);
+
     Song viewSong(int id);
 
-    Page<Song> searchBySong(String song,Pageable pageable);
+    Page<Song> searchBySong(String song, Pageable pageable);
 }

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+
 import java.util.List;
 
 @Service
@@ -18,6 +19,7 @@ public class BlogService implements IBlogService {
     private IBlogRepository blogRepository;
     @Autowired
     private ICategoryRepository categoryRepository;
+
     @Override
     public Page<Blog> getBlogs(Pageable pageable) {
         return blogRepository.findAllByFlagDeleteIsFalse(pageable);
@@ -25,7 +27,7 @@ public class BlogService implements IBlogService {
 
     @Override
     public void deleteBlog(int id) {
-        Blog blog=blogRepository.getBlogByIdAndFlagDeleteFalse(id);
+        Blog blog = blogRepository.getBlogByIdAndFlagDeleteFalse(id);
         blog.setFlagDelete(true);
         blogRepository.save(blog);
     }
@@ -37,7 +39,7 @@ public class BlogService implements IBlogService {
 
     @Override
     public boolean saveBlog(Blog blog) {
-        if (blog.getPeople().equals("") || blog.getContent().equals("") ) {
+        if (blog.getPeople().equals("") || blog.getContent().equals("")) {
             return false;
         } else {
             blogRepository.save(blog);
@@ -51,8 +53,8 @@ public class BlogService implements IBlogService {
     }
 
     @Override
-    public Page<Blog> searchByContent(String content,Pageable pageable) {
-        return blogRepository.searchAllBlog(content,pageable);
+    public Page<Blog> searchByContent(String content, Pageable pageable) {
+        return blogRepository.searchAllBlog(content, pageable);
     }
 
     @Override
@@ -61,7 +63,7 @@ public class BlogService implements IBlogService {
     }
 
     @Override
-    public Page<Blog> getNameCategory(int id,Pageable pageable) {
-        return blogRepository.findAllByCategorise(id,pageable);
+    public Page<Blog> getNameCategory(int id, Pageable pageable) {
+        return blogRepository.findAllByCategorise(id, pageable);
     }
 }

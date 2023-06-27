@@ -11,13 +11,13 @@ public class Song {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-    @Column(columnDefinition = "longtext",nullable = false)
+    @Column(columnDefinition = "longtext", nullable = false)
     private String nameMusic;
-    @Column(columnDefinition = "longtext",nullable = false)
+    @Column(columnDefinition = "longtext", nullable = false)
     private String singer;
-    @Column(columnDefinition = "longtext",nullable = false)
+    @Column(columnDefinition = "longtext", nullable = false)
     private String typeSing;
-    private boolean flagDelete =false;
+    private boolean flagDelete = false;
 
     public Song() {
     }

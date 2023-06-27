@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import org.springframework.data.domain.Pageable;
+
 import java.time.LocalDate;
 
 @Controller
@@ -20,9 +21,9 @@ public class BlogController {
     private IBlogService blogService;
 
     @GetMapping("")
-    public String showBlogs(@PageableDefault(size = 2,sort = "days",direction = Sort.Direction.DESC) Pageable pageable, Model model) {
+    public String showBlogs(@PageableDefault(size = 2, sort = "days", direction = Sort.Direction.DESC) Pageable pageable, Model model) {
         model.addAttribute("blogs", blogService.getBlogs(pageable));
-        model.addAttribute("category",blogService.getCategories());
+        model.addAttribute("category", blogService.getCategories());
         return "blog/index";
     }
 
@@ -41,7 +42,7 @@ public class BlogController {
     public String editBlog(@PathVariable("id") int id, Model model, RedirectAttributes redirectAttributes) {
         if (blogService.viewBlog(id) != null) {
             model.addAttribute("blog", blogService.viewBlog(id));
-            model.addAttribute("category",blogService.getCategories());
+            model.addAttribute("category", blogService.getCategories());
             return "blog/edit";
         } else {
             redirectAttributes.addFlashAttribute("message", "Bạn thực hiện bị lỗi : Vui lòng thực hiện lại");
@@ -65,7 +66,7 @@ public class BlogController {
     @GetMapping("/create")
     public String create(Model model) {
         model.addAttribute("blog", new Blog());
-        model.addAttribute("category",blogService.getCategories());
+        model.addAttribute("category", blogService.getCategories());
         return "blog/create";
     }
 
@@ -83,8 +84,8 @@ public class BlogController {
     }
 
     @PostMapping("/search")
-    public String search(@RequestParam("content") String content,Pageable pageable, Model model) {
-        model.addAttribute("blogs", blogService.searchByContent(content,pageable));
+    public String search(@RequestParam("content") String content, Pageable pageable, Model model) {
+        model.addAttribute("blogs", blogService.searchByContent(content, pageable));
         return "blog/index";
     }
 
@@ -98,10 +99,11 @@ public class BlogController {
             return "redirect:/blogs";
         }
     }
+
     @PostMapping("/select")
-    public String selectBlog(@RequestParam("id")int id,Pageable pageable,Model model){
-        model.addAttribute("blogs",blogService.getNameCategory(id,pageable));
-        model.addAttribute("category",blogService.getCategories());
+    public String selectBlog(@RequestParam("id") int id, Pageable pageable, Model model) {
+        model.addAttribute("blogs", blogService.getNameCategory(id, pageable));
+        model.addAttribute("category", blogService.getCategories());
         return "blog/index";
     }
 }

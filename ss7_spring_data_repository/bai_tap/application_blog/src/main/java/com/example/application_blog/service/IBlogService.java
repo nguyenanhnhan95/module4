@@ -5,6 +5,7 @@ import com.example.application_blog.model.Category;
 import org.springframework.data.domain.Page;
 
 import org.springframework.data.domain.Pageable;
+
 import java.util.List;
 
 public interface IBlogService {
@@ -18,7 +19,9 @@ public interface IBlogService {
 
     Blog viewBlog(int id);
 
-    Page<Blog> searchByContent(String content,Pageable pageable);
+    Page<Blog> searchByContent(String content, Pageable pageable);
+
     List<Category> getCategories();
-    Page<Blog> getNameCategory(int id,Pageable pageable);
+
+    Page<Blog> getNameCategory(int id, Pageable pageable);
 }

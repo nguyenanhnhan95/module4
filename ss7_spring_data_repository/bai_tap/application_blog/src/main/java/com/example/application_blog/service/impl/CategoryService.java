@@ -11,10 +11,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 @Service
 public class CategoryService implements ICategoryService {
     @Autowired
     private ICategoryRepository categoryRepository;
+
     @Override
     public List<Category> getCategory() {
         return categoryRepository.findAll();
@@ -32,7 +34,7 @@ public class CategoryService implements ICategoryService {
 
     @Override
     public boolean saveCategory(Category category) {
-        if(category.getName_category().equals("")){
+        if (category.getName_category().equals("")) {
             return false;
         }
         categoryRepository.save(category);
