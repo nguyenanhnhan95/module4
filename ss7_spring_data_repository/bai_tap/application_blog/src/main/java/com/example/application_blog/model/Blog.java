@@ -18,7 +18,6 @@ public class Blog {
     @ManyToOne
     @JoinColumn(name="id_category",nullable = false)
     private Category category;
-
     public Blog(int id, String title, LocalDate days, String people, String content, boolean is_delete_blog, Category category) {
         this.id = id;
         this.days = days;
