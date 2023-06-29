@@ -9,6 +9,6 @@ public interface IBookRentalService {
     void saveRentalBorrow(BookRental bookRental);
     List<BookRental> getRentals();
     BookRental getBookRental(int id);
+    BookRental getBookCode(String code);
 
-    void updateDayReturn(int id,LocalDate localDate);
 }

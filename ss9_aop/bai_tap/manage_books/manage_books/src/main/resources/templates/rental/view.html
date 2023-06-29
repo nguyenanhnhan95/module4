@@ -10,14 +10,18 @@
           integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 </head>
 <body>
+<a th:href="@{/book}">Home</a>
+<form action="/rental/return" method="post">
+    <input name="codeRental" type="text">
+    <button type="submit" onclick="">Trả Sách</button>
+</form>
+<a th:if="${msg!=null}" th:text="${msg}"></a>
 <table class="table">
     <thead>
     <tr>
         <th scope="col">STT</th>
         <th scope="col">Mã Thuê</th>
-        <th scope="col">Ngày Thuê</th>
-        <th scope="col">Số Lượng Thuê</th>
-        <th scope="col">Trả Lại</th>
+        <th scope="col">Ngày thuê</th>
     </tr>
     </thead>
     <tbody>
@@ -25,9 +29,9 @@
         <td th:text="${isStart.count}"></td>
         <td th:text="${rental.getCodeBorrow()}"></td>
         <td th:text="${rental.getDayReturn()}"></td>
-        <td>
-            <button type="button" th:attr="onclick=|returnBook('${rental.getBook().getId()}','${rental.getBook().getNameBook()}','${rental.getIdReturn()}')|" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#returnModal">Trả lại</button>
-        </td>
+<!--        <td>-->
+<!--            <button type="button" th:attr="onclick=|returnBook('${rental.getBook().getId()}','${rental.getBook().getNameBook()}','${rental.getIdReturn()}')|" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#returnModal">Trả lại</button>-->
+<!--        </td>-->
     </tr>
     </tbody>
 </table>
@@ -46,7 +50,7 @@
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 <form action="/rental/return" method="post">
                     <input type="hidden" id="id" name="id">
-                    <input type="hidden" id="id" name="number">
+                    <input type="hidden" id="idRental" name="idRental">
                 <button type="submit" class="btn btn-primary">Trả Sách</button>
                 </form>
             </div>
@@ -55,9 +59,8 @@
 </div>
 <script>
     const returnBook=(a,b,c,)=>{
-        alert(c)
         document.getElementById("nameBook").innerHTML=b;
-        document.getElementById("number").value=c;
+        document.getElementById("idRental").value=c;
         document.getElementById("id").value=a;
     }
 </script>

@@ -25,11 +25,13 @@ public class BookRentalService implements IBookRentalService {
 
     @Override
     public BookRental getBookRental(int id) {
-        return null;
+        return bookRentalRepository.getBookRental(id);
     }
 
     @Override
-    public void updateDayReturn(int id, LocalDate localDate) {
-        bookRentalRepository.updateReturn(id,localDate);
+    public BookRental getBookCode(String code) {
+        return bookRentalRepository.getBookCode(code);
     }
+
+
 }

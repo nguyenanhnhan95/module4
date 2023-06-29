@@ -12,6 +12,9 @@ import java.util.List;
 @Repository
 public interface IBookRentalRepository extends JpaRepository<BookRental,Integer> {
     List<BookRental> findByisDeleteIsFalse();
-    @Query(value = "UPDATE book_rental set day_return=:day WHERE id=:id",nativeQuery = true)
-     void updateReturn(@Param(value ="id") int id, @Param(value = "day")LocalDate localDate);
+    @Query(value = "SELECT *From book_rental where id_return=:id",nativeQuery = true)
+    BookRental getBookRental(@Param(value = "id")int id);
+
+    @Query(value = "SELECT *From book_rental where code_borrow=:code",nativeQuery = true)
+    BookRental getBookCode(@Param(value = "code")String code);
 }

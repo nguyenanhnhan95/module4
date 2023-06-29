@@ -11,6 +11,7 @@
 </head>
 <body>
 <a th:href="@{/rental}">Quan Lý Thuê</a>
+<div th:if="${msg!=null}" th:text="${msg}"></div>
 <table class="table">
     <thead>
     <tr>

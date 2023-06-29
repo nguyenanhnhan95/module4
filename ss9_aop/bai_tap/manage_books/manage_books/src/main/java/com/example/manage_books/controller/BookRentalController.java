@@ -24,44 +24,52 @@ public class BookRentalController {
     private IBookRentalService bookRentalService;
     @Autowired
     private IBookService bookService;
+
     @GetMapping("")
-    public String showRental(Model model){
-        model.addAttribute("rentals",bookRentalService.getRentals());
+    public String showRental(Model model) {
+        model.addAttribute("rentals", bookRentalService.getRentals());
         return "rental/view";
     }
+
     @PostMapping("/create")
-    public String createRental( @PathParam("id") int id, Model model, RedirectAttributes redirectAttributes){
+    public String createRental(@PathParam("id") int id, Model model, RedirectAttributes redirectAttributes) {
         Book book = bookService.getBook(id);
-        if(book!=null){
-                book.setNumberOfBooks(book.getNumberOfBooks()-1);
-                Random random = new Random();
-                int randomNumber = random.nextInt(100000);
-                String codeBorrow = String.format("%05d", randomNumber);
-                BookRental bookRental = new BookRental(0,codeBorrow,null,false,book);
-                bookRentalService.saveRentalBorrow(bookRental);
-                redirectAttributes.addFlashAttribute("msg","Bạn đặt thành công ");
-                model.addAttribute("rentals",bookRentalService.getRentals());
-                return "rental/view";
-        }else {
-            model.addAttribute("books",bookService.getBooks());
-            redirectAttributes.addFlashAttribute("msg","Bạn thực hện bị lỗi ");
+        if (book != null) {
+            if (book.getNumberOfBooks() == 0) {
+                redirectAttributes.addFlashAttribute("msg", "Sách đã hết ");
+                return "redirect:/book";
+            }
+            book.setNumberOfBooks(book.getNumberOfBooks() - 1);
+            Random random = new Random();
+            int randomNumber = random.nextInt(100000);
+            String codeBorrow = String.format("%05d", randomNumber);
+            BookRental bookRental = new BookRental(0, codeBorrow, LocalDate.now(), false, book);
+            bookRentalService.saveRentalBorrow(bookRental);
+            redirectAttributes.addFlashAttribute("msg", "Bạn đặt thành công ");
+            model.addAttribute("rentals", bookRentalService.getRentals());
+            return "/rental/view";
+        } else {
+            model.addAttribute("books", bookService.getBooks());
+            redirectAttributes.addFlashAttribute("msg", "Bạn thực hện bị lỗi ");
         }
         return "/rental/view";
     }
+
     @PostMapping("/return")
-    public String returnBook(@RequestParam("id") int id, @RequestParam("number") int qualityRental, Model model, RedirectAttributes redirectAttributes){
-        Book book= bookService.getBook(id);
-        if(book!=null){
-            book.setNumberOfBooks(book.getNumberOfBooks()+qualityRental);
+    public String returnBook(@RequestParam("codeRental") String code, Model model, RedirectAttributes redirectAttributes) {
+        BookRental bookRental = bookRentalService.getBookCode(code.trim());
+        if (bookRental != null) {
+            Book book = bookService.getBook(bookRental.getBook().getId());
+            book.setNumberOfBooks(book.getNumberOfBooks() + 1);
             bookService.updateNumberOfBook(book);
-            bookRentalService.updateDayReturn(id,LocalDate.now());
-            model.addAttribute("rentals",bookRentalService.getRentals());
-            return "/rental/view";
+            bookRental.setDelete(true);
+            bookRentalService.saveRentalBorrow(bookRental);
+            model.addAttribute("rentals", bookRentalService.getRentals());
+            model.addAttribute("msg", "Trả sách thành công");
+        } else {
+            model.addAttribute("msg", "Bạn thực hện bị lỗi ");
+            model.addAttribute("rentals", bookRentalService.getRentals());
         }
-        else {
-            redirectAttributes.addFlashAttribute("msg","Bạn thực hện bị lỗi ");
-            model.addAttribute("rentals",bookRentalService.getRentals());
-            return "/rental/view";
-        }
+        return "/rental/view";
     }
 }

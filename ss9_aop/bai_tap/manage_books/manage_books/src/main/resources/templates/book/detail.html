@@ -10,13 +10,12 @@
           integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 </head>
 <body>
-<span>Tác Gỉa</span><span th:text="${book.getAuthor()}"></span>
-<span>Tên tác phẩm</span><span th:text="${book.getNameBook()}"></span>
-<span>Nội Dung</span><span th:text="${book.getDetailBook()}"></span>
-<span>Số lượng</span><span th:text="${book.getNumberOfBooks()}"></span>
+<span>Tác Gỉa</span><span th:text="${book.getAuthor()}"></span><br>
+<span>Tên tác phẩm</span><span th:text="${book.getNameBook()}"></span><br>
+<span>Nội Dung</span><span th:text="${book.getDetailBook()}"></span><br>
+<span>Số lượng</span><span th:text="${book.getNumberOfBooks()}"></span><br>
 <form th:action="@{/rental/create}" method="post">
     <input type="hidden" name="id" th:value="${book.id}">
-    <input type="number" th:min="1" name="quality" th:max="${book.getNumberOfBooks()}" th:step="1" th:value="1">
     <button type="submit">Thuê</button>
 </form>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
