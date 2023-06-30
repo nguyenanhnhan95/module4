@@ -12,18 +12,19 @@
 <body>
 <div class="row">
     <div class="col-4">
-        <form th:action="@{/product/add}" method="post" th:object="${product}">
             <div class="card" style="width: 18rem;">
                 <img th:src="${product.getImg()}" class="card-img-top" alt="...">
+                <input th:hidden="action" th:value="list" th:name="action">
                 <input th:hidden="${product.getId()}" th:field="*{id}">
                 <div class="card-body" style="text-align: center">
                     <h5 class="card-title"><span>Mã Sản Phẩm :</span><span th:text="${product.getCodeProduct()}"></span></h5>
                     <h5 class="card-title"><span>Tên Sản Phẩm :</span><span th:text="${product.getNameProduct()}"></span></h5>
                     <h3 th:text="${product.getPrice()}"></h3>
+                    <a th:href="@{/product/add/__${product.getId()}__(action='list')}">
                     <button type="submit" class="btn btn-warning">Đặt Hàng</button>
+                    </a>
                 </div>
             </div>
-        </form>
     </div>
     <div class="col-8">
         <span>Sản Phẩm </span><span th:text="${product.getId()}"></span><br>

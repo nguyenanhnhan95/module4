@@ -1,6 +1,7 @@
 package com.example.manage_product.model;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 public class Cart {
@@ -15,9 +16,17 @@ public class Cart {
     public Map<Product,Integer> getProducts(){
         return products;
     }
-    private boolean checkItemInCart(Product product){
+    public boolean checkItemInCart(Product product){
         for(Map.Entry<Product,Integer> entry:products.entrySet()){
             if(entry.getKey().getId().equals(product.getId())){
+                return true;
+            }
+        }
+        return false;
+    }
+    public boolean checkItemByIdInCart(Integer id){
+        for(Map.Entry<Product,Integer> entry:products.entrySet()){
+            if(entry.getKey().getId().equals(id)){
                 return true;
             }
         }
@@ -40,6 +49,22 @@ public class Cart {
             products.replace(itemEntry.getKey(),newQuantity);
         }
     }
+    public void subProduct(Product product){
+        Map.Entry<Product,Integer> itemEntry= selectItemInCart(product);
+        if(!itemEntry.getValue().equals(1)){
+            Integer newQuantity= itemEntry.getValue()-1;
+            products.replace(itemEntry.getKey(),newQuantity);
+        }
+    }
+    public void deleteProduct(Integer id){
+        for (Iterator<Map.Entry<Product, Integer>> iterator = products.entrySet().iterator(); iterator.hasNext();) {
+            Map.Entry<Product, Integer> entry = iterator.next();
+            if (entry.getKey().getId().equals(id)) {
+                iterator.remove();
+                break;
+            }
+        }
+    }
     public Integer countProductQuality(){
         Integer productQuality=0;
         for (Map.Entry<Product,Integer> entry:products.entrySet()){
@@ -53,5 +78,8 @@ public class Cart {
             payment+=entry.getKey().getPrice()*(float)entry.getValue();
         }
         return payment;
+    }
+    public void paymentProduct(){
+        products.clear();
     }
 }

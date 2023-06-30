@@ -16,34 +16,52 @@ import java.util.Optional;
 public class ProductController {
     @Autowired
     private IProductService productService;
+
     @ModelAttribute("cart")
-    public Cart setupCart(){
+    public Cart setupCart() {
         return new Cart();
     }
+
     @GetMapping("/shop")
-    private String showShop(Model model){
-        model.addAttribute("products",productService.findAll());
+    private String showShop(Model model) {
+        model.addAttribute("products", productService.findAll());
         return "shop/home";
     }
-    @PostMapping("/add")
-    public String addToCart(@ModelAttribute Product product, @ModelAttribute Cart cart) {
-        Optional<Product> productOptional = productService.findById(product.getId());
-        if (!productOptional.isPresent()) {
-            return "/error.404";
-        }else {
-            cart.addProduct(productOptional.get());
-            return "redirect:/shopping";
-        }
-    }
-    @GetMapping("/detail/{id}")
-    public String detailProduct(@PathVariable("id") Integer id,Model model){
+
+    @GetMapping("/add/{id}")
+    public String addToCart(@PathVariable("id") int id, @ModelAttribute Cart cart, @RequestParam("action") String action) {
         Optional<Product> productOptional = productService.findById(id);
         if (!productOptional.isPresent()) {
             return "/error.404";
-        }else {
+        }
+        if (action.equals("add")) {
+            cart.addProduct(productOptional.get());
+            return "redirect:/shopping";
+        }
+        if (action.equals("sub")) {
+            cart.subProduct(productOptional.get());
+            return "redirect:/shopping";
+        }
+
+        cart.addProduct(productOptional.get());
+        return "redirect:/product/shop";
+    }
+
+    @GetMapping("/detail/{id}")
+    public String detailProduct(@PathVariable("id") Integer id, Model model) {
+        Optional<Product> productOptional = productService.findById(id);
+        if (!productOptional.isPresent()) {
+            return "/error.404";
+        } else {
             Product product = productOptional.get();
             model.addAttribute("product", product);
             return "shop/detail";
         }
+    }
+
+    @GetMapping("payment")
+    public String paymentOrder(@ModelAttribute Cart cart, Model model) {
+        cart.paymentProduct();
+        return "redirect:/product/shop";
     }
 }
