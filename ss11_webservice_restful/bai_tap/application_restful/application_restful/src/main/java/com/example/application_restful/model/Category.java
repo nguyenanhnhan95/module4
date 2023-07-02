@@ -27,6 +27,14 @@ public class Category {
     public Category() {
     }
 
+    public List<Blog> getBlogs() {
+        return blogs;
+    }
+
+    public void setBlogs(List<Blog> blogs) {
+        this.blogs = blogs;
+    }
+
     public int getIdCategory() {
         return idCategory;
     }

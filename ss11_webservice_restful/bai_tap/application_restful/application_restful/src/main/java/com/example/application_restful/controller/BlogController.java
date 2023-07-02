@@ -32,7 +32,7 @@ public class BlogController {
         }
     }
 
-    @PostMapping("/add")
+    @PostMapping()
     public ResponseEntity<?> createBlog(@RequestBody Blog blog) {
         if (blogService.viewBlog(blog.getId()) != null) {
             blogService.saveBlog(blog);
@@ -42,7 +42,7 @@ public class BlogController {
         }
     }
 
-    @PutMapping("/edit")
+    @PutMapping()
     public ResponseEntity<?> updateBlog(@RequestBody Blog blog) {
         if (blogService.viewBlog(blog.getId()) != null) {
             blogService.updateBlog(blog);

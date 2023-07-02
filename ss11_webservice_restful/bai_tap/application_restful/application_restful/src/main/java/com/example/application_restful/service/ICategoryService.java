@@ -17,7 +17,7 @@ public interface ICategoryService {
 
     Category viewCategory(int id);
 
-    List<Blog> searchByContent(String content);
+    List<Blog> findByIdCategory(int id);
     List<Category> getCategories();
     Page<Category> getNameCategory(int id);
 }

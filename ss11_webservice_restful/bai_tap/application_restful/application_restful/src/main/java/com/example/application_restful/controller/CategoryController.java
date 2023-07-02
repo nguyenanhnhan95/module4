@@ -18,7 +18,7 @@ public class CategoryController {
     @Autowired
     private ICategoryService categoryService;
     @Autowired
-    IBlogRepository blogRepository;
+    private IBlogRepository blogRepository;
     @GetMapping()
     public ResponseEntity<List<Category>> getCategories(){
         if(categoryService.getCategory().isEmpty()){
@@ -35,6 +35,16 @@ public class CategoryController {
         }
         else {
             return new ResponseEntity<>(blogRepository.findBlogsByCategory_IdCategory(id),HttpStatus.OK);
+        }
+
+    }
+    @PostMapping("{id}")
+    public ResponseEntity<List<Blog>> getBlog(@PathVariable int id){
+        if(categoryService.findByIdCategory(id)==null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        else {
+            return new ResponseEntity<>(categoryService.findByIdCategory(id),HttpStatus.OK);
         }
 
     }

@@ -45,8 +45,8 @@ public class CategoryService implements ICategoryService {
     }
 
     @Override
-    public List<Blog> searchByContent(String content) {
-        return null;
+    public List<Blog> findByIdCategory(int id) {
+        return categoryRepository.findByidCategory(id).getBlogs();
     }
 
     @Override
