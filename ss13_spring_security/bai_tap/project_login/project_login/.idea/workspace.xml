@@ -5,6 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="57fb9975-0b3b-48b6-ad59-f9c160f3a166" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../../Spring-Security" beforeDir="false" afterPath="$PROJECT_DIR$/../../Spring-Security" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../../../ss5_orm/thuc_hanh/customer-management" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../ss5_orm/thuc_hanh/customer-management" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -52,7 +54,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "D:/Codegym/module4/module4/ss13_spring_security/bai_tap/Spring-Security",
+    "last_opened_file_path": "D:/Codegym/module4/module4/ss13_spring_security/bai_tap/project_login/project_login",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -86,6 +88,7 @@
       <workItem from="1688441813087" duration="3203000" />
       <workItem from="1688445043636" duration="112000" />
       <workItem from="1688445178199" duration="22000" />
+      <workItem from="1688474209077" duration="28000" />
     </task>
     <servers />
   </component>
