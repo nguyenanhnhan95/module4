@@ -34,9 +34,7 @@
         <label for="contentNew" class="form-label">Email address</label>
         <input type="text" class="form-control" id="contentNew">
     </div>
-    <select id="category">
-        <option ></option>
-    </select>
+    <div class="mb-3" id="select"></div>
     <button type="submit" class="btn btn-primary">Submit</button>
 </form>
 <form id="myForm">
@@ -70,7 +68,6 @@
                 <h3><span id="showAuthor"></span></h3>
                 <input type="hidden" id="blogId" name="blogId" >
             </div>
-            <div id="select"></div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 <button type="button" onclick="deleteBlog()" class="btn btn-primary">Delete</button>
@@ -79,7 +76,6 @@
     </div>
 </div>
 <button id="loadBlog" onclick="loadBlog()">Tải Thêm</button>
-<div id="a"></div>
 <script>
     let number=2
     const loadBlog=()=>{
@@ -173,6 +169,7 @@
             $('#table').hide();
             $('#loadBlog').hide();
             $('#addNew').hide();
+            $('#addForm').show();
             $.ajax({
                 url:'http://localhost:8080/category',
                 type:'GET',
@@ -190,7 +187,7 @@
                     // TODO
                 }
             });
-            $('#addForm').show();
+
         });
     }
 
