@@ -20,11 +20,30 @@
     </style>
 </head>
 <body>
+<button  id="addNew" onclick="addBlog()">Thêm mới</button>
+<form id="addForm">
+    <div class="mb-3">
+        <label for="name" class="form-label">Email address</label>
+        <input type="text" class="form-control" id="name">
+    </div>
+    <div class="mb-3">
+        <label for="date" class="form-label">Password</label>
+        <input type="date" class="form-control" id="date">
+    </div>
+    <div class="mb-3">
+        <label for="contentNew" class="form-label">Email address</label>
+        <input type="text" class="form-control" id="contentNew">
+    </div>
+    <select id="category">
+        <option ></option>
+    </select>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
 <form id="myForm">
-    <input th:placeholder="content" name="content" id="content">
+    <input placeholder="content" name="content" id="content">
     <button type="button" onclick="searchBlog()">Search</button>
 </form>
-<table  >
+<table  id="table">
     <thead>
     <tr>
         <th>STT</th>
@@ -39,7 +58,28 @@
 
     </tbody>
 </table>
-<button onclick="loadBlog()">Tải Thêm</button>
+<div id="formAdd"></div>
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Xóa Blog</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h3><span id="showAuthor"></span></h3>
+                <input type="hidden" id="blogId" name="blogId" >
+            </div>
+            <div id="select"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" onclick="deleteBlog()" class="btn btn-primary">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+<button id="loadBlog" onclick="loadBlog()">Tải Thêm</button>
+<div id="a"></div>
 <script>
     let number=2
     const loadBlog=()=>{
@@ -93,7 +133,8 @@
                         <td>${blog.people}</td>
                         <td>${blog.days}</td>
                         <td>${blog.content}</td>
-                        <<td><button type="button" onclick="deleteBlog(${blog.id})">Delete</button></td>
+<!--                        <td><button type="button" onclick="deleteBlog(${blog.id})">Delete</button></td>-->
+                         <td><button type="button" onclick="alertModal(${blog.id},'${blog.people}')" id="myDelete">Delete</button></td>
                     </tr>
                 `;
                     }
@@ -104,20 +145,57 @@
                 }
             });
     }
-    const deleteBlog=(id)=>{
-        $.ajax({
-            url:'http://localhost:8080/blog/'+id,
-            type:'DELETE',
-            success:function (){
-                getList();
-            },
-            error:function (error){
-                //TODO
-            }
-        })
+    const deleteBlog=()=>{
+        $('#exampleModal').modal('hide');
+       const id = $('#blogId').val();
+        setTimeout(function (){
+            $.ajax({
+                url:'http://localhost:8080/blog/'+id,
+                type:'DELETE',
+                success:function (){
+                    getList();
+                },
+                error:function (error){
+                    //TODO
+                }
+            });
+        });
+    }
+
+    const alertModal=(id,name)=>{
+        document.getElementById("showAuthor").innerHTML=name;
+        document.getElementById("blogId").value=id;
+        $('#exampleModal').modal('show')
+    }
+    const addBlog=()=>{
+        $('#addNew').click(function (){
+            $('#myForm').hide();
+            $('#table').hide();
+            $('#loadBlog').hide();
+            $('#addNew').hide();
+            $.ajax({
+                url:'http://localhost:8080/category',
+                type:'GET',
+                success:function (data){
+                    let newStr="<select name='category' id='categories'>"
+                    for(let category of data){
+                        newStr+=`
+                    <option value='${category.idCategory}'>${category.name_category}</option>
+                    `;
+                    }
+                    newStr+="</select>";
+                    $('#select').html(newStr)
+                },
+                error: function (error) {
+                    // TODO
+                }
+            });
+            $('#addForm').show();
+        });
     }
 
     $(document).ready(function () {
+        $('#addForm').hide();
         getList();
     })
 </script>
